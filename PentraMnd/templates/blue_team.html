@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<style>
+    .bt-header {
+        background: linear-gradient(135deg, rgba(0, 210, 255, 0.1) 0%, rgba(2, 4, 8, 1) 100%);
+        border: 1px solid rgba(0, 210, 255, 0.2);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .bt-header::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(0, 210, 255, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+    }
+
+    .defense-card {
+        background: var(--card-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 2rem;
+        height: 100%;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .defense-card:hover {
+        border-color: var(--neon-blue);
+        box-shadow: 0 0 30px rgba(0, 210, 255, 0.1);
+        transform: translateY(-5px);
+    }
+</style>
+
+<div class="bt-header animate__animated animate__fadeIn">
+    <div class="d-flex align-items-center gap-4">
+        <div class="icon-box" style="width: 70px; height: 70px; font-size: 2rem; margin-bottom: 0;">
+            <i class="fas fa-shield-halved"></i>
+        </div>
+        <div>
+            <span class="badge bg-info text-dark px-3 mb-2">OPERATIONAL_PHASE_02</span>
+            <h1 class="fw-800 mb-0">Defensive <span class="text-neon">Architecture</span></h1>
+            <p class="text-dim mb-0">Harden architectural perimeters and monitor structural integrity.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <!-- Existing Cards ... -->
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-lg-8">
+        <div class="card p-4 border-0 h-100">
+            <h5 class="fw-bold mb-4"><i class="fas fa-tasks me-2 text-neon"></i>Compliance Audit Mandates</h5>
+            <div class="table-responsive">
+                <table class="table table-dark table-sm align-middle mb-0">
+                    <tr class="border-bottom border-secondary border-opacity-30">
+                        <td class="py-3">OWASP Top 10 (2021)</td>
+                        <td class="text-end"><span class="badge bg-info text-dark">82% COMPLIANT</span></td>
+                    </tr>
+                    <tr class="border-bottom border-secondary border-opacity-30">
+                        <td class="py-3">NIST Cybersecurity Framework</td>
+                        <td class="text-end"><span class="badge bg-warning text-dark">AUDIT_PENDING</span></td>
+                    </tr>
+                    <tr class="border-bottom border-secondary border-opacity-30">
+                        <td class="py-3">PCI-DSS 4.0 Readiness</td>
+                        <td class="text-end"><span class="badge bg-danger">NON_COMPLIANT</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card p-4 border-0 h-100 bg-info bg-opacity-5">
+            <h5 class="fw-bold mb-3 text-neon"><i class="fas fa-user-secret me-2"></i>Deployment Agent</h5>
+            <p class="text-dim small mb-4">Install the heuristic monitoring agent on your host for real-time architectural auditing.</p>
+            <div class="p-3 bg-black rounded border border-info border-opacity-20 font-monospace small text-info mb-3">
+                curl -sSL https://pentramind.io/agent/setup.sh | bash
+            </div>
+            <button class="btn btn-outline-info w-100 btn-sm">Download Configuration</button>
+        </div>
+    </div>
+</div>
+
+<h3 class="fw-800 mb-4 text-neon"><i class="fas fa-clipboard-list me-2"></i>Structural Integrity Reports</h3>
+
+<h3 class="fw-800 mb-4 text-neon"><i class="fas fa-clipboard-list me-2"></i>Structural Integrity Reports</h3>
+{% if targets %}
+<div class="row g-4 mb-5">
+    {% for target in targets %}
+    <div class="col-12">
+        <div class="card p-4 border-0">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-server text-neon me-3"></i>
+                    <code class="text-light fw-bold">{{ target.url_or_ip }}</code>
+                </div>
+                <div class="d-flex gap-2">
+                    {% for report in target.reports %}
+                    <a href="{{ url_for('view_report', report_id=report.id, mode='blue') }}" class="btn btn-sm btn-outline-info font-monospace">
+                        PATCH_FIX_{{ report.severity }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+    <p class="text-dim italic">No structural data identified. Monitor a target to begin.</p>
+</div>
+{% endif %}
+
+{% endblock %}
+
