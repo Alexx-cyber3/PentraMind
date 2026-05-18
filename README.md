@@ -22,3 +22,7 @@
        * Red Team Dashboard: Allows users to add targets and trigger scans (Traditional or AI-based).
        * Blue Team Dashboard: Focused on reports, impact analysis, and remediation steps to help security teams harden
          their infrastructure.
+
+
+      add openai key to work
+      
